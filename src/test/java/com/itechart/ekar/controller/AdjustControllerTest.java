@@ -1,9 +1,13 @@
 package com.itechart.ekar.controller;
 
 import com.itechart.ekar.dto.ClientConfiguration;
+import com.itechart.ekar.service.countmanager.ChangeResult;
+import com.itechart.ekar.service.countmanager.ChangeResultInterpreter;
+import com.itechart.ekar.service.countmanager.CounterManager;
 import com.itechart.ekar.service.logging.RequestLoggingService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -13,8 +17,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -28,6 +31,12 @@ public class AdjustControllerTest {
 
     @MockBean
     private RequestLoggingService requestLoggingService;
+
+    @MockBean
+    private CounterManager counterManager;
+
+    @MockBean
+    private ChangeResultInterpreter resultInterpreter;
 
     @Test
     public void postAdjustClient() throws Exception {
@@ -43,11 +52,15 @@ public class AdjustControllerTest {
     @Test
     public void postAdjustNewCounter() throws Exception {
         Integer newCounter = 6;
+        ChangeResult result = mock(ChangeResult.class);
+        when(counterManager.setNewValue(newCounter)).thenReturn(result);
+
         mvc.perform(post("/adjust/counter/{newCounter}", newCounter)
             .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk());
 
         verify(requestLoggingService, times(1)).logCounter(newCounter);
+        verify(resultInterpreter, times(1)).interpret(any(String.class), eq(result));
     }
 
 
