@@ -1,10 +1,12 @@
 package com.itechart.ekar.controller;
 
+import com.itechart.ekar.service.logging.RequestLoggingService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -20,6 +22,9 @@ public class AdjustControllerTest {
 
     @Autowired
     private MockMvc mvc;
+
+    @MockBean
+    private RequestLoggingService requestLoggingService;
 
     @Test
     public void postAdjustClient() throws Exception {
