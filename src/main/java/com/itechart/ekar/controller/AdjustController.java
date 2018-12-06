@@ -22,6 +22,6 @@ public class AdjustController {
     @PostMapping("/adjust/counter/{newCounter}")
     @ResponseStatus(value = HttpStatus.OK)
     public void adjustCounter(@PathVariable("newCounter") Integer newCounter) {
-
+        requestLoggingService.logCounter(newCounter);
     }
 }

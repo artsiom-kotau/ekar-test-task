@@ -11,6 +11,15 @@ public class RequestEventFactory {
 
     public RequestEvent createConfigurationEvent(ClientConfiguration configuration) {
         String payload = String.format("producer = %s, consumer = %s", configuration.getProducer(), configuration.getConsumer());
+        return createEvent(payload);
+    }
+
+    public RequestEvent createChangeCounter(Integer counter) {
+        String payload = String.format("counter value = %s", counter);
+        return createEvent(payload);
+    }
+
+    private RequestEvent createEvent(String payload) {
         RequestEvent requestEvent = new RequestEvent();
         requestEvent.setPayload(payload);
         requestEvent.setEventTime(LocalDateTime.now());

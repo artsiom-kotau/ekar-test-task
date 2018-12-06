@@ -1,5 +1,6 @@
 package com.itechart.ekar.controller;
 
+import com.itechart.ekar.dto.ClientConfiguration;
 import com.itechart.ekar.service.logging.RequestLoggingService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,6 +13,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -34,6 +37,7 @@ public class AdjustControllerTest {
             .content(String.format("{\"producer\" : \"%s\", \"consumer\" : \"%s\"}", producer, consumer))
             .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isCreated());
+        verify(requestLoggingService, times(1)).logConfigurationEvent(new ClientConfiguration(producer, consumer));
     }
 
     @Test
@@ -42,6 +46,8 @@ public class AdjustControllerTest {
         mvc.perform(post("/adjust/counter/{newCounter}", newCounter)
             .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk());
+
+        verify(requestLoggingService, times(1)).logCounter(newCounter);
     }
 
 
