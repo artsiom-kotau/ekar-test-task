@@ -9,5 +9,6 @@ CREATE TABLE `request_event` (
 
 CREATE TABLE `stop_event` (
   `id` INT NOT NULL AUTO_INCREMENT,
+  `reached` VARCHAR(8) NULL,
   `event_time` DATETIME NULL,
   PRIMARY KEY (`id`));

@@ -1,5 +1,6 @@
 package com.itechart.ekar.service.countmanager;
 
+import com.itechart.ekar.repository.StopEventRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -17,6 +18,9 @@ public class CounterManagerTest {
 
     @Mock
     private StopResolver stopResolver;
+
+    @Mock
+    private StopEventRepository stopEventRepository;
 
     @Test
     public void setValue() {

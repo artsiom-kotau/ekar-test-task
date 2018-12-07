@@ -9,8 +9,8 @@ import org.slf4j.Logger;
 @Slf4j
 public class Producer extends Worker {
 
-    public Producer(String identifier, CounterManager counterManager, ChangeResultInterpreter resultInterpreter) {
-        super(identifier, counterManager, resultInterpreter);
+    public Producer(String identifier, CounterManager counterManager, ChangeResultInterpreter resultInterpreter, WorkerPool pool) {
+        super(identifier, counterManager, resultInterpreter, pool);
     }
 
     @Override
@@ -21,5 +21,10 @@ public class Producer extends Worker {
     @Override
     protected Logger logger() {
         return log;
+    }
+
+    @Override
+    protected void doRemove() {
+        getWorkerPool().removeProducerWorker(this);
     }
 }

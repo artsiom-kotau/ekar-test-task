@@ -26,9 +26,12 @@ public class ProducerTest {
 
     private Producer producer;
 
+    @Mock
+    private WorkerPool workerPool;
+
     @Before
     public void init() {
-        producer = new Producer(identity, counterManager, resultInterpreter);
+        producer = new Producer(identity, counterManager, resultInterpreter, workerPool);
     }
 
     @Test

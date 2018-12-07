@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 public class ChangeResultInterpreter {
 
     public void interpret(String who, ChangeResult result) {
-
+        if (result.isChanged()) {
+            log.info("{} has changed value from '{}' to '{}'", who, result.getPreviousValue(), result.getCurrentValue());
+        }
     }
 }

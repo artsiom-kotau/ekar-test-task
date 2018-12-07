@@ -17,11 +17,14 @@ public abstract class Worker implements Runnable {
 
     private volatile boolean continueWork;
 
-    public Worker(String identifier, CounterManager counterManager, ChangeResultInterpreter resultInterpreter) {
+    private WorkerPool workerPool;
+
+    public Worker(String identifier, CounterManager counterManager, ChangeResultInterpreter resultInterpreter, WorkerPool pool) {
         this.identifier = identifier;
         this.counterManager = counterManager;
         this.resultInterpreter = resultInterpreter;
         this.continueWork = true;
+        this.workerPool = pool;
     }
 
     @Override
@@ -31,8 +34,11 @@ public abstract class Worker implements Runnable {
             changeResult = doWork();
             resultInterpreter.interpret(identifier, changeResult);
         }while (changeResult.isChanged() && continueWork);
-        logger().info("{} have been stopped", identifier);
+        doRemove();
+        logger().info("{} has been stopped", identifier);
     }
+
+    protected abstract void doRemove();
 
     public void stop() {
         continueWork = false;
@@ -48,5 +54,9 @@ public abstract class Worker implements Runnable {
 
     protected String getIdentifier() {
         return identifier;
+    }
+
+    public WorkerPool getWorkerPool() {
+        return workerPool;
     }
 }

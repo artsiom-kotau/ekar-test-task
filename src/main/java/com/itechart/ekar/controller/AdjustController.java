@@ -5,6 +5,7 @@ import com.itechart.ekar.service.countmanager.ChangeResult;
 import com.itechart.ekar.service.countmanager.ChangeResultInterpreter;
 import com.itechart.ekar.service.countmanager.CounterManager;
 import com.itechart.ekar.service.logging.RequestLoggingService;
+import com.itechart.ekar.service.worker.WorkerPool;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,10 +24,14 @@ public class AdjustController {
     @Autowired
     private ChangeResultInterpreter resultInterpreter;
 
+    @Autowired
+    private WorkerPool workerPool;
+
     @PostMapping("/adjust/client")
     @ResponseStatus(value = HttpStatus.CREATED)
     public void adjustClient(@RequestBody ClientConfiguration configuration) {
         requestLoggingService.logConfigurationEvent(configuration);
+        workerPool.updateWorkers(configuration);
 
     }
 

@@ -15,12 +15,12 @@ public class WorkerFactory {
 
     private ChangeResultInterpreter resultInterpreter;
 
-    public Worker createProducer(Integer number) {
-        return new Producer(String.format(PRODUCER_IDENTITY_TEMPLATE, number), counterManager, resultInterpreter);
+    public Worker createProducer(Integer number, WorkerPool pool) {
+        return new Producer(String.format(PRODUCER_IDENTITY_TEMPLATE, number), counterManager, resultInterpreter, pool);
     }
 
-    public Worker createConsumer(Integer number) {
-        return new Consumer(String.format(CONSUMER_IDENTITY_TEMPLATE, number), counterManager, resultInterpreter);
+    public Worker createConsumer(Integer number, WorkerPool pool) {
+        return new Consumer(String.format(CONSUMER_IDENTITY_TEMPLATE, number), counterManager, resultInterpreter, pool);
     }
 
     @Autowired

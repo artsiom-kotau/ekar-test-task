@@ -5,6 +5,7 @@ import com.itechart.ekar.service.countmanager.ChangeResult;
 import com.itechart.ekar.service.countmanager.ChangeResultInterpreter;
 import com.itechart.ekar.service.countmanager.CounterManager;
 import com.itechart.ekar.service.logging.RequestLoggingService;
+import com.itechart.ekar.service.worker.WorkerPool;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -37,6 +38,9 @@ public class AdjustControllerTest {
 
     @MockBean
     private ChangeResultInterpreter resultInterpreter;
+
+    @MockBean
+    private WorkerPool workerPool;
 
     @Test
     public void postAdjustClient() throws Exception {
