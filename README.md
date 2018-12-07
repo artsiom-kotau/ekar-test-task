@@ -24,3 +24,15 @@ The following parameters could be configured before startup. This parameters pas
 4. min.value - min value of shared number. The default value `0`
 5. max.value - max value of shared number. The default value `100`
 5. init.value - init value of shared number. The default value `50`
+
+# Docker
+
+- To build docker image run the following: `docker build -t itechart/ekar-app .`
+- To up the app and mysql in containers use `docker-compose up`
+- External mysql port is 33061
+
+# Mysql
+
+There are two tables:
+ 1. request_event. Store request information.
+ 2. stop_event. Log the stop event  

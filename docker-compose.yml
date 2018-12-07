@@ -3,10 +3,13 @@ version: '3'
 services:
   docker-mysql:
     image: mysql:latest
+    ports:
+      - 33061:3306
     environment:
     - MYSQL_DATABASE=ekar
     - MYSQL_ROOT_PASSWORD=root
     - MYSQL_PASSWORD=root
+
   ekar-app:
     image: itechart/ekar-app:latest
     depends_on:
