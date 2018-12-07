@@ -1,8 +1,10 @@
 package com.itechart.ekar.service.countmanager;
 
+import lombok.Data;
 import lombok.Getter;
 
 @Getter
+@Data
 public class ChangeResult {
 
     private final int previousValue;
