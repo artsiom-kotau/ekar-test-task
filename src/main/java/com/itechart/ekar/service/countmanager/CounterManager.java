@@ -46,9 +46,7 @@ public class CounterManager {
                 value++;
                 return ChangeResult.changed(previous, value);
             } else {
-                ChangeResult result = ChangeResult.notChanged(value);
-                publishStopEvent(result);
-                return result;
+                return processNotChangeResult();
             }
         }
     }
@@ -60,11 +58,15 @@ public class CounterManager {
                 value--;
                 return ChangeResult.changed(previous, value);
             } else {
-                ChangeResult result = ChangeResult.notChanged(value);
-                publishStopEvent(result);
-                return result;
+                return processNotChangeResult();
             }
         }
+    }
+
+    private ChangeResult processNotChangeResult() {
+        ChangeResult result = ChangeResult.notChanged(value);
+        publishStopEvent(result);
+        return result;
     }
 
     private void publishStopEvent(ChangeResult changeResult) {

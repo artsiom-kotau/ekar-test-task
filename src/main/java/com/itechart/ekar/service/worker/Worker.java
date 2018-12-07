@@ -33,9 +33,8 @@ public abstract class Worker implements Runnable {
         do {
             changeResult = doWork();
             resultInterpreter.interpret(identifier, changeResult);
-        }while (changeResult.isChanged() && continueWork);
+        } while (changeResult.isChanged() && continueWork);
         doRemove();
-        logger().info("{} has been stopped", identifier);
     }
 
     protected abstract void doRemove();

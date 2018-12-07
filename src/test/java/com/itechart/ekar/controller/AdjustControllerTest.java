@@ -50,7 +50,9 @@ public class AdjustControllerTest {
             .content(String.format("{\"producer\" : \"%s\", \"consumer\" : \"%s\"}", producer, consumer))
             .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isCreated());
-        verify(requestLoggingService, times(1)).logConfigurationEvent(new ClientConfiguration(producer, consumer));
+        ClientConfiguration clientConfiguration = new ClientConfiguration(producer, consumer);
+        verify(requestLoggingService, times(1)).logConfigurationEvent(clientConfiguration);
+        verify(workerPool, times(1)).updateWorkers(clientConfiguration);
     }
 
     @Test
