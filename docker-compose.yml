@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  docker-mysql:
+    image: mysql:latest
+    environment:
+    - MYSQL_DATABASE=ekar
+    - MYSQL_ROOT_PASSWORD=root
+    - MYSQL_PASSWORD=root
+  ekar-app:
+    image: itechart/ekar-app:latest
+    depends_on:
+    - docker-mysql
+    ports:
+    - 8080:8080
+    environment:
+    - SPRING_DATASOURCE_URL=jdbc:mysql://docker-mysql/ekar?serverTimezone=UTC
+    - SPRING_DATASOURCE_USERNAME=root
+    - SPRING_DATASOURCE_PASSWORD=root
