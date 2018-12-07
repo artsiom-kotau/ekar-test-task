@@ -9,9 +9,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ProducerTest {
@@ -36,7 +34,7 @@ public class ProducerTest {
 
     @Test
     public void changeResultChangedStopCalled() {
-        ChangeResult changeResult = ChangeResult.changed(23,22);
+        ChangeResult changeResult = ChangeResult.changed(23, 22);
         when(counterManager.increment()).thenReturn(changeResult);
         producer.stop();
         producer.run();

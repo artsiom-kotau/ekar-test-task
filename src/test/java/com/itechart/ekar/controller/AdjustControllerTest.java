@@ -8,7 +8,6 @@ import com.itechart.ekar.service.logging.RequestLoggingService;
 import com.itechart.ekar.service.worker.WorkerPool;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -23,8 +22,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
-@WebMvcTest(value = AdjustController.class,
-    secure = false)
+@WebMvcTest(value = AdjustController.class, secure = false)
 public class AdjustControllerTest {
 
     @Autowired
@@ -46,10 +44,7 @@ public class AdjustControllerTest {
     public void postAdjustClient() throws Exception {
         Integer producer = 23;
         Integer consumer = 45;
-        mvc.perform(post("/adjust/client")
-            .content(String.format("{\"producer\" : \"%s\", \"consumer\" : \"%s\"}", producer, consumer))
-            .contentType(MediaType.APPLICATION_JSON))
-            .andExpect(status().isCreated());
+        mvc.perform(post("/adjust/client").content(String.format("{\"producer\" : \"%s\", \"consumer\" : \"%s\"}", producer, consumer)).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isCreated());
         ClientConfiguration clientConfiguration = new ClientConfiguration(producer, consumer);
         verify(requestLoggingService, times(1)).logConfigurationEvent(clientConfiguration);
         verify(workerPool, times(1)).updateWorkers(clientConfiguration);
@@ -61,9 +56,7 @@ public class AdjustControllerTest {
         ChangeResult result = mock(ChangeResult.class);
         when(counterManager.setNewValue(newCounter)).thenReturn(result);
 
-        mvc.perform(post("/adjust/counter/{newCounter}", newCounter)
-            .contentType(MediaType.APPLICATION_JSON))
-            .andExpect(status().isOk());
+        mvc.perform(post("/adjust/counter/{newCounter}", newCounter).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
 
         verify(requestLoggingService, times(1)).logCounter(newCounter);
         verify(resultInterpreter, times(1)).interpret(any(String.class), eq(result));

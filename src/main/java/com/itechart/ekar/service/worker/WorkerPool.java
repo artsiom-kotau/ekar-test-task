@@ -12,16 +12,11 @@ import java.util.concurrent.Executors;
 @Component
 public class WorkerPool {
 
-    private ExecutorService executorService = Executors.newCachedThreadPool();
-
     private final Object producerMonitor = new Object();
-
     private final Object consumerMonitor = new Object();
-
     private final Queue<Worker> producers = new LinkedList<>();
-
     private final Queue<Worker> consumers = new LinkedList<>();
-
+    private ExecutorService executorService = Executors.newCachedThreadPool();
     private WorkerFactory workerFactory;
 
     public void updateWorkers(ClientConfiguration configuration) {
@@ -95,12 +90,12 @@ public class WorkerPool {
         }
     }
 
-    private interface WhatProduce {
-        Worker produce(Integer identity);
-    }
-
     @Autowired
     public void setWorkerFactory(WorkerFactory workerFactory) {
         this.workerFactory = workerFactory;
+    }
+
+    private interface WhatProduce {
+        Worker produce(Integer identity);
     }
 }

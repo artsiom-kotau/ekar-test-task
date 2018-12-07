@@ -30,6 +30,6 @@ public class ChangeResult {
     }
 
     public static ChangeResult notChanged(int currentValue) {
-        return new ChangeResult(currentValue, currentValue,false);
+        return new ChangeResult(currentValue, currentValue, false);
     }
 }

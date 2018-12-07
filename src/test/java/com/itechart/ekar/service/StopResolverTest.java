@@ -10,7 +10,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 @TestPropertySource(properties = {"min.value=0", "max.value=100"})
@@ -25,16 +26,6 @@ public class StopResolverTest {
     @Value("${max.value}")
     private Integer maxValue;
 
-    @TestConfiguration
-    public static class StopResolverTestConfig {
-
-        @Bean
-        public StopResolver stopResolver() {
-            return new StopResolver();
-        }
-
-    }
-
     @Test
     public void couldntBeChangedIfLessThanMin() {
         assertFalse(stopResolver.couldBeChanged(Integer.MIN_VALUE));
@@ -47,7 +38,7 @@ public class StopResolverTest {
 
     @Test
     public void couldBeChanged() {
-        assertTrue(stopResolver.couldBeChanged((minValue+maxValue)/2));
+        assertTrue(stopResolver.couldBeChanged((minValue + maxValue) / 2));
     }
 
     @Test
@@ -58,6 +49,16 @@ public class StopResolverTest {
     @Test
     public void couldntBeChangedIfEqulaMax() {
         assertFalse(stopResolver.couldBeChanged(maxValue));
+    }
+
+    @TestConfiguration
+    public static class StopResolverTestConfig {
+
+        @Bean
+        public StopResolver stopResolver() {
+            return new StopResolver();
+        }
+
     }
 
 }

@@ -67,7 +67,7 @@ public class CounterManagerTest {
 
         assertTrue(result.isChanged());
         assertEquals(prevValue, result.getPreviousValue());
-        assertEquals(prevValue+1, result.getCurrentValue());
+        assertEquals(prevValue + 1, result.getCurrentValue());
     }
 
 
@@ -92,7 +92,7 @@ public class CounterManagerTest {
 
         assertTrue(result.isChanged());
         assertEquals(prevValue, result.getPreviousValue());
-        assertEquals(prevValue-1, result.getCurrentValue());
+        assertEquals(prevValue - 1, result.getCurrentValue());
     }
 
     private void couldChanged(int value) {
